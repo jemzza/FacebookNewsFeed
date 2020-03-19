@@ -51,7 +51,9 @@ class FeedCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 2
         let attributedText = NSMutableAttributedString(string: "Mark Zuckerberg", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
-        attributedText.append(NSAttributedString(string: "\nDecember 18  •  San Francisco  •  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor(red: 155 / 255, green: 161 / 255, blue: 171 / 255, alpha: 1)]))
+        attributedText.append(NSAttributedString(string: "\nDecember 18  •  San Francisco  •  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor:
+            UIColor.rgb(red: 155, green: 161, blue: 171)]))
+
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4
@@ -90,6 +92,14 @@ class FeedCell: UICollectionViewCell {
         return imageView
     }()
     
+    let likesCommentsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "488 Likes  10.7K Comments"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.rgb(red: 155, green: 161, blue: 161)
+        return label
+    }()
+    
     func setupViews() {
         backgroundColor = .white
         
@@ -97,16 +107,24 @@ class FeedCell: UICollectionViewCell {
         addSubview(profileImageView)
         addSubview(statusTextView)
         addSubview(statusImageView)
+        addSubview(likesCommentsLabel)
         
         addConstraintsWithFormat(format: "H:|-8-[v0(44)]-8-[v1]|", views: profileImageView ,nameLabel)
 //        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[v0(44)]-8-[v1]|", metrics: nil, views: ["v0": profileImageView, "v1": nameLabel]))
         addConstraintsWithFormat(format: "H:|[v0]|", views: statusTextView)
         addConstraintsWithFormat(format: "H:|-4-[v0]-4-|", views: statusImageView)
+        addConstraintsWithFormat(format: "H:|-12-[v0]|", views: likesCommentsLabel)
         addConstraintsWithFormat(format: "V:|-12-[v0]", views: nameLabel)
 //        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", metrics: nil, views: ["v0": nameLabel]))
-        addConstraintsWithFormat(format: "V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]|", views: profileImageView, statusTextView, statusImageView)
+        addConstraintsWithFormat(format: "V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]-8-[v3(24)]-8-|", views: profileImageView, statusTextView, statusImageView, likesCommentsLabel)
 //        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0(44)]", metrics: nil, views: ["v0": profileImageView]))
 
+    }
+}
+
+extension UIColor {
+    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
+        return UIColor(red: red / 255, green: green / 255, blue: blue / 255, alpha: 1)
     }
 }
 
